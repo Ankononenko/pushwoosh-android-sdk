@@ -11,6 +11,9 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
+import java.util.List;
+import java.util.Arrays;
+
 public class TLSSocketFactory extends SSLSocketFactory {
     private SSLSocketFactory internalSSLSocketFactory;
 
@@ -62,6 +65,8 @@ public class TLSSocketFactory extends SSLSocketFactory {
 
     private Socket enableTLSOnSocket(Socket socket) {
         if(socket != null && (socket instanceof SSLSocket)) {
+            // The protocols must have been listed by getSupportedProtocols() as being supported.
+            // Following a successful call to this method, only protocols listed in the protocols parameter are enabled for use.
             List<String> supportedProtocols = Arrays.asList(((SSLSocket) socket).getSupportedProtocols());
             // If TLSv1.3 is supported, set only this protocal as enabled.
             // Secure connections can be established as much as 40% faster with TLS 1.3 compared to TLS 1.2.
