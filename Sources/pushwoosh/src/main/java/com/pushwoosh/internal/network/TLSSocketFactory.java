@@ -62,8 +62,16 @@ public class TLSSocketFactory extends SSLSocketFactory {
 
     private Socket enableTLSOnSocket(Socket socket) {
         if(socket != null && (socket instanceof SSLSocket)) {
-            ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2"});
+            List<String> supportedProtocols = Arrays.asList(((SSLSocket) socket).getSupportedProtocols());
+            // If TLSv1.3 is supported, set only this protocal as enabled.
+            // Secure connections can be established as much as 40% faster with TLS 1.3 compared to TLS 1.2.
+            if (supportedProtocols.contains("TLSv1.3")) {
+                ((SSLSocket)socket).setEnabledProtocols(new String[]{"TLSv1.3"});
+            } else if (supportedProtocols.contains("TLSv1.2")) {
+                ((SSLSocket)socket).setEnabledProtocols(new String[]{"TLSv1.2"});
+            }
         }
         return socket;
     }
+
 }
