@@ -57,13 +57,14 @@ class PushwooshRequestManager implements RequestManager {
 
 		baseRequestUrl = registrationPrefs.baseUrl().get();
 
-		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-			try {
-				HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
-			} catch (Exception e) {
-				PWLog.error(TAG, "ERROR: " + e.getMessage(), e);
-			}
-		}
+		// Todo: Check if used and remove if not
+//		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+//			try {
+//				HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
+//			} catch (Exception e) {
+//				PWLog.error(TAG, "ERROR: " + e.getMessage(), e);
+//			}
+//		}
 	}
 
 	private boolean isRemoveAllDataDevice(){
